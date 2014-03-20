@@ -21,6 +21,8 @@
 		562D4C3618DB6D8A006FF228 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 562D4C1818DB6D8A006FF228 /* UIKit.framework */; };
 		562D4C3E18DB6D8A006FF228 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 562D4C3C18DB6D8A006FF228 /* InfoPlist.strings */; };
 		562D4C4018DB6D8A006FF228 /* BreakoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C3F18DB6D8A006FF228 /* BreakoutTests.m */; };
+		562D4C4B18DB6E8D006FF228 /* PaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C4A18DB6E8D006FF228 /* PaddleView.m */; };
+		562D4C4E18DB6EA9006FF228 /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C4D18DB6EA9006FF228 /* BallView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		562D4C3B18DB6D8A006FF228 /* BreakoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BreakoutTests-Info.plist"; sourceTree = "<group>"; };
 		562D4C3D18DB6D8A006FF228 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		562D4C3F18DB6D8A006FF228 /* BreakoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BreakoutTests.m; sourceTree = "<group>"; };
+		562D4C4918DB6E8D006FF228 /* PaddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddleView.h; sourceTree = "<group>"; };
+		562D4C4A18DB6E8D006FF228 /* PaddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddleView.m; sourceTree = "<group>"; };
+		562D4C4C18DB6EA9006FF228 /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
+		562D4C4D18DB6EA9006FF228 /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,10 @@
 				562D4C2618DB6D8A006FF228 /* Main.storyboard */,
 				562D4C2918DB6D8A006FF228 /* ViewController.h */,
 				562D4C2A18DB6D8A006FF228 /* ViewController.m */,
+				562D4C4C18DB6EA9006FF228 /* BallView.h */,
+				562D4C4D18DB6EA9006FF228 /* BallView.m */,
+				562D4C4918DB6E8D006FF228 /* PaddleView.h */,
+				562D4C4A18DB6E8D006FF228 /* PaddleView.m */,
 				562D4C2C18DB6D8A006FF228 /* Images.xcassets */,
 				562D4C1B18DB6D8A006FF228 /* Supporting Files */,
 			);
@@ -249,7 +259,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				562D4C4B18DB6E8D006FF228 /* PaddleView.m in Sources */,
 				562D4C2B18DB6D8A006FF228 /* ViewController.m in Sources */,
+				562D4C4E18DB6EA9006FF228 /* BallView.m in Sources */,
 				562D4C2518DB6D8A006FF228 /* AppDelegate.m in Sources */,
 				562D4C2118DB6D8A006FF228 /* main.m in Sources */,
 			);
