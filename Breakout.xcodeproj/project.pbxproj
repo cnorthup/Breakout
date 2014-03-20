@@ -23,6 +23,7 @@
 		562D4C4018DB6D8A006FF228 /* BreakoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C3F18DB6D8A006FF228 /* BreakoutTests.m */; };
 		562D4C4B18DB6E8D006FF228 /* PaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C4A18DB6E8D006FF228 /* PaddleView.m */; };
 		562D4C4E18DB6EA9006FF228 /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C4D18DB6EA9006FF228 /* BallView.m */; };
+		562D4C5118DB8997006FF228 /* BlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 562D4C5018DB8997006FF228 /* BlockView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		562D4C4A18DB6E8D006FF228 /* PaddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddleView.m; sourceTree = "<group>"; };
 		562D4C4C18DB6EA9006FF228 /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
 		562D4C4D18DB6EA9006FF228 /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
+		562D4C4F18DB8997006FF228 /* BlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockView.h; sourceTree = "<group>"; };
+		562D4C5018DB8997006FF228 /* BlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				562D4C4D18DB6EA9006FF228 /* BallView.m */,
 				562D4C4918DB6E8D006FF228 /* PaddleView.h */,
 				562D4C4A18DB6E8D006FF228 /* PaddleView.m */,
+				562D4C4F18DB8997006FF228 /* BlockView.h */,
+				562D4C5018DB8997006FF228 /* BlockView.m */,
 				562D4C2C18DB6D8A006FF228 /* Images.xcassets */,
 				562D4C1B18DB6D8A006FF228 /* Supporting Files */,
 			);
@@ -259,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				562D4C5118DB8997006FF228 /* BlockView.m in Sources */,
 				562D4C4B18DB6E8D006FF228 /* PaddleView.m in Sources */,
 				562D4C2B18DB6D8A006FF228 /* ViewController.m in Sources */,
 				562D4C4E18DB6EA9006FF228 /* BallView.m in Sources */,

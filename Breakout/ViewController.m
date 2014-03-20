@@ -9,16 +9,19 @@
 #import "ViewController.h"
 #import "BallView.h"
 #import "PaddleView.h"
+#import "BlockView.h"
 
 @interface ViewController () <UICollisionBehaviorDelegate>
 {
     IBOutlet BallView *ballView;
     IBOutlet PaddleView *paddleView;
+    IBOutlet BlockView *blockView;
     UIDynamicAnimator* dynamicAnimator;
     UIPushBehavior* pushBehavior;
     UICollisionBehavior* collisionBehavior;
     UIDynamicItemBehavior* ballDynamicItemBehavior;
     UIDynamicItemBehavior* paddleDynamicItemBehavior;
+    UIDynamicItemBehavior* blockDynamicItemBehavior;
 }
 @end
 
@@ -29,13 +32,18 @@
     [super viewDidLoad];
     dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     pushBehavior = [[UIPushBehavior alloc] initWithItems:@[ballView] mode:UIPushBehaviorModeInstantaneous];
-    collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballView, paddleView]];
+    collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballView, paddleView, blockView]];
     ballDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[ballView]];
     paddleDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[paddleView]];
+    blockDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[blockView]];
     
     paddleDynamicItemBehavior.allowsRotation = NO;
     paddleDynamicItemBehavior.density = 10000000000000;
     [dynamicAnimator addBehavior: paddleDynamicItemBehavior];
+    
+    blockDynamicItemBehavior.allowsRotation = NO;
+    blockDynamicItemBehavior.density = 10000000000000;
+    [dynamicAnimator addBehavior: blockDynamicItemBehavior];
     
     ballDynamicItemBehavior.allowsRotation = NO;
     ballDynamicItemBehavior.elasticity = 1.0;
@@ -61,51 +69,26 @@
     [dynamicAnimator updateItemUsingCurrentState:paddleView];
 }
 
-- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier{
-}
-
 
 - (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p{
+    CGFloat x = ([ballDynamicItemBehavior linearVelocityForItem:item].x * -1) + 0.5;
+    CGFloat y = ([ballDynamicItemBehavior linearVelocityForItem:item].y * -1) + 1.0;
     if (p.y > paddleView.frame.origin.y) {
         [ballDynamicItemBehavior addAngularVelocity:([ballDynamicItemBehavior angularVelocityForItem:item] * -1) forItem:item];
         ballView.center = self.view.center;
-        CGFloat x = ([ballDynamicItemBehavior linearVelocityForItem:item].x * -1) + 0.5;
-        CGFloat y = ([ballDynamicItemBehavior linearVelocityForItem:item].y * -1) + 1.0;
         pushBehavior.pushDirection = CGVectorMake(x, y);
         pushBehavior.active = YES;
-        pushBehavior.magnitude = 0.04;
+        pushBehavior.magnitude = 0.02;
+        ballView.backgroundColor = [UIColor redColor];
+        [UIView animateWithDuration:1.0 animations:^{
+            ballView.backgroundColor = [UIColor whiteColor];
+        } completion:^(BOOL finished) {
+            pushBehavior.pushDirection = CGVectorMake(x, y);
+            pushBehavior.active = YES;
+            pushBehavior.magnitude = 0.02;
+        }];
     }
     [dynamicAnimator updateItemUsingCurrentState:ballView];
-    //pushBehavior.pushDirection =
-//    if (p.y > paddleView.frame.origin.y) {
-//        ballDynamicItemBehavior.elasticity = 0.0;
-//        ballDynamicItemBehavior.friction = 100000000000000000;
-//        ballDynamicItemBehavior.resistance = 100000000000000000;
-//        ballView.center = self.view.center;
-//        [dynamicAnimator updateItemUsingCurrentState:ballView];
-//    }
-    //CGFloat velocity = [ballDynamicItemBehavior angularVelocityForItem:item];
-    //NSLog(@"%f", velocity);
-    //pushBehavior.pushDirection = CGVectorMake(ballDynamicItemBehavior, <#CGFloat dy#>)
-    
-    
-    
-    
-//    [UIView animateWithDuration:2 animations:^{
-//        ballDynamicItemBehavior.allowsRotation = NO;
-//        ballDynamicItemBehavior.elasticity = 1.0;
-//        ballDynamicItemBehavior.friction = 0.0;
-//        ballDynamicItemBehavior.resistance = 0.0;
-//        pushBehavior.pushDirection = CGVectorMake(0.5, 1.0);
-//        pushBehavior.active = YES;
-//        pushBehavior.magnitude = 0.02;
-//        [dynamicAnimator updateItemUsingCurrentState:ballView];
-//    } completion:^(BOOL finished) {
-//        pushBehavior.pushDirection = CGVectorMake(0.5, 1.0);
-//        pushBehavior.active = YES;
-//        pushBehavior.magnitude = 0.02;
-//        [dynamicAnimator updateItemUsingCurrentState:ballView];
-//    }];
 }
 
 - (void)didReceiveMemoryWarning
