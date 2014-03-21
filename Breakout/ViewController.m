@@ -22,6 +22,10 @@
     UIDynamicItemBehavior* ballDynamicItemBehavior;
     UIDynamicItemBehavior* paddleDynamicItemBehavior;
     UIDynamicItemBehavior* blockDynamicItemBehavior;
+    NSMutableArray *blocks;
+    CGFloat rectX;
+    CGFloat rectY;
+    NSMutableArray *failed;
 }
 @end
 
@@ -36,6 +40,43 @@
     ballDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[ballView]];
     paddleDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[paddleView]];
     blockDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[blockView]];
+    blocks = [NSMutableArray new];
+    failed = [NSMutableArray new];
+    [blocks addObject:blockView];
+    while (blocks.count < 50) {
+        rectX = arc4random() % 290;
+        rectY = arc4random() % 200;
+        BlockView* block1 = [[BlockView alloc] initWithFrame:CGRectMake(rectX, rectY, blockView.frame.size.width, blockView.frame.size.height)];
+        block1.backgroundColor = [UIColor whiteColor];
+
+        for (BlockView* createdBlock in blocks) {
+            while ((CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
+//                CGPoint p = CGPointMake(block1.frame.origin.x, block1.frame.origin.y);
+//               // [failed addObject:];
+//            }
+//            if ((CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
+//                [failed addObject:<#(id)#>]
+//            }
+            
+//            BOOL inter = (CGRectIntersectsRect(block1.frame, createdBlock.frame));
+//            NSLog(@"%hhd", inter);
+            //CGRect inter = CGRectIntersection(createdBlock.frame, block1.frame);
+//            while(inter){
+//                rectX = arc4random() % 290;
+//                rectY = arc4random() % 215;
+//                [block1 setCenter:CGPointMake(rectX, rectY)];
+//                if (!(CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
+//                    inter = NO;
+//                    break;
+//                }
+//                //NSLog(@"try");
+//            }
+            }
+        }
+        [self.view addSubview:block1];
+        [blocks addObject:block1];
+        //NSLog(@"block added");
+    }
     
     paddleDynamicItemBehavior.allowsRotation = NO;
     paddleDynamicItemBehavior.density = 10000000000000;
@@ -61,6 +102,16 @@
     pushBehavior.magnitude = 0.02;
     [dynamicAnimator addBehavior:pushBehavior];
     
+}
+
+-(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p{
+    if ([item2 isEqual:blockView] || [item1 isEqual:blockView]) {
+    [collisionBehavior removeItem:blockView];
+    [blockView removeFromSuperview];
+    }
+    
+    
+
 }
 
 - (IBAction)dragPaddle:(UIPanGestureRecognizer *)sender{
