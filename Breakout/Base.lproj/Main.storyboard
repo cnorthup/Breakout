@@ -22,11 +22,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="p4k-H0-OSX" customClass="BlockView">
-                                <rect key="frame" x="34" y="392" width="40" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -36,7 +31,6 @@
                     </view>
                     <connections>
                         <outlet property="ballView" destination="pBj-lg-gpP" id="DFY-Eg-PDI"/>
-                        <outlet property="blockView" destination="p4k-H0-OSX" id="BfE-FN-DxY"/>
                         <outlet property="paddleView" destination="MvH-Rj-whp" id="M1t-mN-2aM"/>
                     </connections>
                 </viewController>

@@ -11,15 +11,14 @@
 #import "PaddleView.h"
 #import "BlockView.h"
 
-#define NUMBER_ROWS 3
-#define BLOCK_WIDTH_EASY 40
-#define BLOCK_HEIGHT_EASY 40
+#define NUMBER_ROWS 6
+#define BLOCK_WIDTH_EASY 30
+#define BLOCK_HEIGHT_EASY 20
 
 @interface ViewController () <UICollisionBehaviorDelegate>
 {
     IBOutlet BallView *ballView;
     IBOutlet PaddleView *paddleView;
-    IBOutlet BlockView *blockView;
     UIDynamicAnimator* dynamicAnimator;
     UIPushBehavior* pushBehavior;
     UICollisionBehavior* collisionBehavior;
@@ -48,19 +47,14 @@
     
     dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     pushBehavior = [[UIPushBehavior alloc] initWithItems:@[ballView] mode:UIPushBehaviorModeInstantaneous];
-    collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballView, paddleView, blockView]];
+    collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballView, paddleView]];
     ballDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[ballView]];
     paddleDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[paddleView]];
-    blockDynamicItemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[blockView]];
     blockDynamicBehavior = [[UIDynamicItemBehavior alloc] initWithItems:blocks];
     
     paddleDynamicItemBehavior.allowsRotation = NO;
     paddleDynamicItemBehavior.density = 10000000000000;
     [dynamicAnimator addBehavior: paddleDynamicItemBehavior];
-    
-    blockDynamicItemBehavior.allowsRotation = NO;
-    blockDynamicItemBehavior.density = 10000000000000;
-    [dynamicAnimator addBehavior: blockDynamicItemBehavior];
     
     ballDynamicItemBehavior.allowsRotation = NO;
     ballDynamicItemBehavior.elasticity = 1.0;
@@ -81,11 +75,13 @@
 }
 
 -(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p{
-    if ([item2 isEqual:blockView] || [item1 isEqual:blockView]) {
-    [collisionBehavior removeItem:blockView];
-    [blockView removeFromSuperview];
-    }
+    BlockView* block = (BlockView*)item2;
     
+    if ([item2 isKindOfClass:[BlockView class]]) {
+        [collisionBehavior removeItem:item2];
+        [(BlockView*)item2 removeFromSuperview];
+        [dynamicAnimator updateItemUsingCurrentState:item2];
+    }
 }
 
 - (IBAction)dragPaddle:(UIPanGestureRecognizer *)sender{
@@ -119,105 +115,36 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void) addBlocks{
-    float fudgeFactor = 0.0005;
-    float width = 0.0;
-    float height = 0.00;
+    float x = 0.0;
+    float y = 0.00;
     for (int numberOfColumns=0; numberOfColumns < NUMBER_ROWS; numberOfColumns++){
         for (int i=0; i < self.view.frame.size.width/BLOCK_WIDTH_EASY; i++){
             BlockView *block = [BlockView new];
-            block.frame = CGRectMake(width, height, BLOCK_WIDTH_EASY, BLOCK_HEIGHT_EASY);
+            block.frame = CGRectMake(x, y, BLOCK_WIDTH_EASY, BLOCK_HEIGHT_EASY);
             block.backgroundColor = [UIColor whiteColor];
             
-            //block.backgroundColor = [self chooseARandomColorForBlock];
             blockDynamicBehavior.density = 10000000000000000;
             blockDynamicBehavior.allowsRotation = NO;
-            blockDynamicBehavior.elasticity = 1.0;
-            blockDynamicBehavior.friction = 0.0;
-            blockDynamicBehavior.resistance =0.0;
             [dynamicAnimator addBehavior:blockDynamicBehavior];
             block.layer.contents = (__bridge id)[UIImage imageNamed:@"Image-3"].CGImage;
             
             [self.view addSubview:block];
             [blocks addObject:block];
             [collisionBehavior addItem:block];
-            width += BLOCK_WIDTH_EASY;
+            x += BLOCK_WIDTH_EASY + 2;
             NSLog(@"block frame x:%f y:%f",block.frame.origin.x,block.frame.origin.y);
             
         }
         
-        width =0.0;
-        
-        height += numberOfColumns + BLOCK_HEIGHT_EASY +fudgeFactor;
+        x =0.0;
+        y += BLOCK_HEIGHT_EASY + 2;
         
     }
     
 }
-//    float factor = .0005;
-//    float width = 0.0;
-//    float height = 0.00;
-//    
-//    for (int numberColumns=0; numberColumns < Number_Rows; numberColumns++) {
-//        for (int i = 0; self.view.frame.size.width/BLOCK_WIDTH_EASY; i++)
-//        {
-//            BlockView *block = [BlockView new];
-//            block.frame = CGRectMake(width, height, BLOCK_WIDTH_EASY, BLOCK_HEIGHT_EASY);
-//            blockDynamicBehavior.density = 1000000000000;
-//            blockDynamicBehavior.allowsRotation = NO;
-//            blockDynamicBehavior.elasticity = 1.0;
-//            blockDynamicBehavior.friction = 0.0;
-//            blockDynamicBehavior.resistance =0.0;
-//            [dynamicAnimator addBehavior:blockDynamicBehavior];
-//            [self.view addSubview:block];
-//            [collisionBehavior addItem:block];
-//            width += BLOCK_WIDTH_EASY;
-//            NSLog(@"fdsf");
-//        }
-//        width =0.0;
-//        
-//        height += numberColumns + BLOCK_HEIGHT_EASY +factor;
-//    }
-//    blocks = [NSMutableArray new];
-//    failed = [NSMutableArray new];
-//    [blocks addObject:blockView];
-//    while (blocks.count < 50) {
-//        rectX = arc4random() % 290;
-//        rectY = arc4random() % 200;
-//        BlockView* block1 = [[BlockView alloc] initWithFrame:CGRectMake(rectX, rectY, blockView.frame.size.width, blockView.frame.size.height)];
-//        block1.backgroundColor = [UIColor whiteColor];
-//        [self.view addSubview:block1];
-//        for (BlockView* createdBlock in blocks) {
-    
-            //            while ((CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
-            //                rectX = arc4random() % 290;
-            //                rectY = arc4random() % 200;
-            //                NSLog(@"try");
-            //                CGPoint p = CGPointMake(block1.frame.origin.x, block1.frame.origin.y);
-            //               // [failed addObject:];
-            //            }
-            //            if ((CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
-            //                [failed addObject:<#(id)#>]
-            //            }
-            
-            //            BOOL inter = (CGRectIntersectsRect(block1.frame, createdBlock.frame));
-            //            NSLog(@"%hhd", inter);
-            //CGRect inter = CGRectIntersection(createdBlock.frame, block1.frame);
-            //            while(inter){
-            //                rectX = arc4random() % 290;
-            //                rectY = arc4random() % 215;
-            //                [block1 setCenter:CGPointMake(rectX, rectY)];
-            //                if (!(CGRectIntersectsRect(block1.frame, createdBlock.frame))) {
-            //                    inter = NO;
-            //                    break;
-            //                }
-            //                //NSLog(@"try");
-            //            }
-            //            }
-//        [blocks addObject:block1];
-        //NSLog(@"block added");
 
 - (void) viewDidAppear:(BOOL)animated
 {
